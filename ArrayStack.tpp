@@ -1,6 +1,7 @@
 template <typename T>
 ArrayStack<T>::ArrayStack(int i) {
-    // TODO
+    buffer = new T[i];
+    maxSize = i;
 }
 
 template <typename T>
@@ -24,12 +25,17 @@ ArrayStack<T>::~ArrayStack() {
 
 template <typename T>
 void ArrayStack<T>::clear() {
-    // TODO
+    this->length = 0;
 }
 
 template <typename T>
 void ArrayStack<T>::copy(const ArrayStack<T>& copyObj) {
-    // TODO
+    buffer = new T[copyObj.getMaxSize()];
+    for (int i = 0; i < copyObj.getLength(); i++) {
+        buffer[i] = copyObj.buffer[i];
+    }
+    maxSize = copyObj.getLength();
+    this->length = copyObj.getLength();
 }
 
 template <typename T>
@@ -54,17 +60,30 @@ bool ArrayStack<T>::isFull() const {
 
 template <typename T>
 T ArrayStack<T>::peek() const {
-    // TODO
+    if (this->length == 0) {
+        throw string("peek: error, stack is empty, cannot access the top");
+    } else {
+        return buffer[this->length - 1];
+    }
 }
 
 template <typename T>
 void ArrayStack<T>::pop() {
-    // TODO
+    if (this->length == 0) {
+        throw string("pop: error, stack is empty, avoiding underflow");
+    } else {
+        this->length--;
+    }
 }
 
 template <typename T>
 void ArrayStack<T>::push(const T& elem) {
-    // TODO
+    if (isFull()) {
+        throw string("push: error, stack is full, avoiding overflow");
+    } else {
+        buffer[this->length] = elem;
+        this->length++;
+    }
 }
 
 template <typename T>
