@@ -88,7 +88,28 @@ void ArrayStack<T>::push(const T& elem) {
 
 template <typename T>
 void ArrayStack<T>::rotate(typename Stack<T>::Direction dir) {
-    // TODO
+    if (this->length <= 1) {
+        return;
+    }
+    switch (dir) {
+        case Stack<T>::LEFT: {
+            
+            T first = buffer[0];
+            for (int i = 0; i < this->length-1; i++) {
+                buffer[i] = buffer[i+1];
+            }
+            buffer[this->length-1] = first;
+            break;
+        }
+        case Stack<T>::RIGHT: {
+            T end = buffer[this->length - 1];
+            for (int i = this->length-1; i > 0; i--) {
+                buffer[i] = buffer[i-1];
+            }
+            buffer[0] = end;
+            break;
+        }
+    }
 }
 
 template <typename T>
